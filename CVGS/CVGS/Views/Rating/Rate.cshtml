@@ -1,0 +1,14 @@
+﻿@model CVGS.Models.Rating
+@{
+    ViewBag.Title = "Rate Game";
+}
+
+<h2>Rating </h2>
+@using (Html.BeginForm("Rate","Rating", FormMethod.Post)) {
+<div class="form-group">
+    @Html.Label("Rate game", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+       
+    </div>
+</div>
+}

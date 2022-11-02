@@ -1,0 +1,112 @@
+﻿@model IEnumerable<CVGS.Models.Game>
+
+@{
+    ViewBag.Title = "Member Page";
+
+
+}
+
+<br />
+
+
+@*@if (TempData["InfoMessage"] != null)
+    {
+        <div class="alert alert-info"> @TempData["InfoMessage"]</div>
+    }
+    else if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger"> @TempData["ErrorMessage"]</div>
+    }*@
+
+@using (Html.BeginForm("Index", "Member", FormMethod.Get))
+{
+    @Html.TextBox("Search", null, new { Class = "form-control", placeHolder = "Search Game Here" })
+    <input type="submit" value="Search" class="btn btn-success" />
+    @*<a class="btn btn-success" onclick="SaveList()">Details</a>*@
+}
+<table class="table table-striped" id="ItemList">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameName)
+            </th>
+
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td style="color:red" colspan="3">
+                    No GAME Found.
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <ul>
+                            <li>
+                                @*<a href="@Url.Action("Details", "Member")" new { id=item.GameID }> @Html.DisplayFor(modelItem => item.GameName)</a>*@
+                                <a href='/Member/Details/@item.GameID'> @Html.DisplayFor(modelItem => item.GameName)</a>
+                            </li>
+                            </ul>
+                            
+                    </td>
+
+                    <td>
+                     
+                        @if (!string.IsNullOrWhiteSpace(item.ImageURL))
+                        {
+                         
+                                <img src="@Url.Content(item.ImageURL)" alt="" height="100" width="100">
+                           
+                        }
+                    
+                    </td>
+
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+<script>
+    var SaveList = function () {
+
+        var arrItem = [];
+        var Ids = "";
+        $("#ItemList tr span input[type=checkbox]").each(function (index,val) {
+            var checkId = $(val).attr("Id");
+            var arr = checkId.split('_');
+            var currentcheckboxId = arr[1];
+            var IsChecked = $("#" + checkId).is(":checked", true);
+            if (IsChecked) {
+                arrItem.push(currentcheckboxId);
+            }
+        })
+        if (arrItem.length != 0) {
+            Ids = arrItem.toString();
+            $.ajax({
+                url: "/Member/SaveList",
+                type: "POST",
+                data: { ItemList: Ids },
+                success: function (response) {
+
+                }
+            })
+        }
+    }
+</script>
+
+
+
+
+

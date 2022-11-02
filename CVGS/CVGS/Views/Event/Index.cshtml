@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CVGS.Models.Event>
+
+@{
+    ViewBag.Title = "Events";
+}
+
+<h2>Events</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddEvent")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EventName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EventDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EventDate)
+        </th>
+        <th> @Html.DisplayNameFor(model => model.ImageURL)</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDate)
+            </td>
+            <td>
+            </td>
+            <td>
+                @if (!string.IsNullOrWhiteSpace(item.ImageURL))
+                {
+                    <a href="#" class="product-list-img">
+                        <img src="@Url.Content(item.ImageURL)" alt="" height="100" width="100">
+                    </a>
+                }
+         
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditEvent", new { id = item.EventID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.EventID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.EventID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+

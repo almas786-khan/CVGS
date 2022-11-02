@@ -1,0 +1,40 @@
+﻿@model List<CVGS.Models.friendViewModel>
+
+@{
+    ViewBag.Title = "Friends";
+}
+<h2>List of your Friends & Family</h2>
+
+<p>@Html.ActionLink("Add Friends", "AddFriend", "Friend", new { area = "" }, null)</p>
+<table class="table">
+    <tr>
+        <th>
+            <p>Friends</p>
+        </th>
+
+    </tr>
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td style="color:red" colspan="3">
+                No FRIENDS in your friend list.
+            </td>
+        </tr>
+    }
+    else
+    {
+
+
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <span>@item.Member2Name</span>
+            </td>
+        </tr>
+    }
+    }
+</table>
+
+                
+
